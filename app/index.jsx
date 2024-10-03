@@ -26,7 +26,7 @@ const index = () => {
           <TouchableOpacity
             style={{ width: wp(80), height: hp(8) }}
             className="bg-black rounded-xl flex justify-center"
-            onPress={() => router.push("/create")}
+            onPress={() => router.push("/home")}
           >
             <Text className="text-white w-full text-center text-xl">Let's Start</Text>
           </TouchableOpacity>
