@@ -8,7 +8,7 @@ export default function _layout() {
         title: "Create New Tournament",
         headerShown: true,
         headerStyle: {
-          backgroundColor: "#9B00FF",
+          backgroundColor: "#7F00FF",
         },
         headerTintColor: "white",
 

@@ -33,11 +33,17 @@ const create = () => {
     else {
       const newTeams = teams.map((val) => val.name);
       const matches = generateMatchPairing(newTeams, selectedMode);
+
+      const length = matches.length;
+      const match = matches[0].length;
+
+      const result = new Array(length).fill(new Array(match).fill(""));
       console.log(matches);
-      await db.runAsync("INSERT INTO tournaments (title, mode, matches) VALUES (?, ?, ?)", [
+      await db.runAsync("INSERT INTO tournaments (title, mode, matches ,result) VALUES (?, ?, ?, ?)", [
         name,
         selectedMode,
         JSON.stringify(matches),
+        JSON.stringify(result)
       ]);
 
       router.push(`${name}`);

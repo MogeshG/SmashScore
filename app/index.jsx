@@ -24,6 +24,7 @@ const index = () => {
             title TEXT,
             mode INT,
             matches TEXT,
+            result TEXT,
             finished BOOLEAN DEFAULT false
           )`,
         [],
@@ -38,6 +39,13 @@ const index = () => {
       console.log(err);
     }
   }, []);
+
+  // const clearDatabase = async () => {
+  //   await db.execAsync("DROP TABLE IF EXISTS tournaments;", []);
+  // };
+
+  // clearDatabase();
+
   return (
     <View className="flex-1 flex justify-end">
       {/* <StatusBar style="dark" /> */}

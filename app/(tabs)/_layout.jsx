@@ -37,12 +37,9 @@ const TabsLayout = () => {
           title: "Home",
           headerShown: true,
           headerStyle: {
-            backgroundColor: "#9B00FF",
+            backgroundColor: "#7F00FF",
           },
           headerTintColor: "white",
-          //   tabBarIcon: ({ color, focused }) => (
-          //     <TabIcon icon={icons.home} color={color} name="Home" focused={focused} />
-          //   ),
         }}
       />
       {/* <Tabs.Screen

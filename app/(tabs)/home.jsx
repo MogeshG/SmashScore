@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { useIsFocused } from "@react-navigation/native";
@@ -21,7 +21,6 @@ const home = () => {
     try {
       const response = await db.getAllAsync("SELECT * FROM tournaments");
       setTournamentsList(response);
-      console.log(response);
     } catch (err) {
       console.log(err);
     }
@@ -42,15 +41,17 @@ const home = () => {
   };
 
   return (
-    <View className="flex w-full h-full items-center justify-around bg-teal-100">
-      <ScrollView style={{ width: wp(90) }} className="p-4">
+    <View className="flex w-full h-full py-2 items-center justify-around bg-teal-100">
+      <ScrollView style={{ width: wp(90) }} className="py-2 px-2 mb-4">
         {tournamentsList &&
           tournamentsList.map((data) => (
-            <View
-              className={`w-full h-fit flex flex-row p-2 bg-white justify-between border-2 rounded-md ${
+            <TouchableOpacity
+              className={`w-full h-fit flex flex-row p-2 my-2 bg-white justify-between border-2 rounded-md ${
                 data.finished ? "border-green-500" : "border-red-600"
               }`}
               key={data.id}
+              activeOpacity={0.8}
+              onPress={() => router.push(`/${data.title}`)}
             >
               <View className="flex justify-between w-5/6 ">
                 <Text className="text-[20px] font-bold text-purple-600">{data.title}</Text>
@@ -76,7 +77,7 @@ const home = () => {
                   <MaterialIcons name="delete" size={25} color="red" />
                 </TouchableOpacity>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
       </ScrollView>
       <View>
@@ -86,7 +87,6 @@ const home = () => {
         >
           <AntDesign name="plus" color="#FFFFFF" size={32} />
         </TouchableOpacity>
-        {/* <Text className="text-xl font-bold text-darkNavyBlue">Start New</Text> */}
       </View>
     </View>
   );
