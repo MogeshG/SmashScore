@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "SmashScore",
-    "slug": "SmashScore",
+    "slug": "smash-score",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "/assets/images/Smash.png",
@@ -13,23 +13,32 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mogesh.smashscore"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.mogesh.smashscore"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": ""
     },
-    "plugins": ["expo-router"],
+    "plugins": [
+      "expo-router"
+    ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4ca79074-35ff-4a48-b1cf-273ae68c2cf1"
+      }
+    },
+    "owner": "mogesh"
   }
 }
-
