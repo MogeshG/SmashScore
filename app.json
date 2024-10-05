@@ -4,7 +4,7 @@
     "slug": "SmashScore",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "",
+    "icon": "/assets/images/Smash.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -26,11 +26,10 @@
       "output": "static",
       "favicon": ""
     },
-    "plugins": [
-      "expo-router"
-    ],
+    "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true
     }
   }
 }
+

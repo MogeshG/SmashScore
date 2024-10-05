@@ -23,6 +23,7 @@ const index = () => {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT,
             mode INT,
+            teams TEXT,
             matches TEXT,
             result TEXT,
             finished BOOLEAN DEFAULT false
@@ -39,6 +40,8 @@ const index = () => {
       console.log(err);
     }
   }, []);
+
+  // Clear Database
 
   // const clearDatabase = async () => {
   //   await db.execAsync("DROP TABLE IF EXISTS tournaments;", []);

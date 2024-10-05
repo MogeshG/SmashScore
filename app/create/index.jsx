@@ -39,12 +39,16 @@ const create = () => {
 
       const result = new Array(length).fill(new Array(match).fill(""));
       console.log(matches);
-      await db.runAsync("INSERT INTO tournaments (title, mode, matches ,result) VALUES (?, ?, ?, ?)", [
-        name,
-        selectedMode,
-        JSON.stringify(matches),
-        JSON.stringify(result)
-      ]);
+      await db.runAsync(
+        "INSERT INTO tournaments (title, mode, teams, matches ,result) VALUES (?, ?, ?, ?, ?)",
+        [
+          name,
+          selectedMode,
+          JSON.stringify(newTeams),
+          JSON.stringify(matches),
+          JSON.stringify(result),
+        ]
+      );
 
       router.push(`${name}`);
     }

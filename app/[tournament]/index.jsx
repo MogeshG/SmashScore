@@ -14,11 +14,15 @@ const Index = () => {
   const navigation = useNavigation();
   const router = useRouter();
   const isFocussed = useIsFocused();
+  const [isDisabled, setIsDisabled] = useState(false);
   const [result, setResult] = useState([]);
   const [data, setData] = useState({
+    id: 0,
     title: "",
     mode: "",
+    teams: [],
     matches: [],
+    result: [],
   });
 
   const name = useLocalSearchParams();
@@ -29,12 +33,10 @@ const Index = () => {
         name["tournament"],
       ]);
 
-      console.log(response)
-
       const matches = JSON.parse(response.matches);
       const result = JSON.parse(response.result);
+      setIsDisabled(response.finished === 0 ? false : true);
 
-      console.log(response);
       setData({ ...response, matches: matches, result: result });
       setResult(result);
     } catch (err) {
@@ -43,7 +45,7 @@ const Index = () => {
   };
 
   useLayoutEffect(() => {
-    router.setParams({ title: name["tournament"] });
+    router.setParams({ title: name["tournament"], id: data.id });
   }, [navigation]);
 
   useEffect(() => {
@@ -52,22 +54,40 @@ const Index = () => {
 
   const handleWin = async (index, idx, team) => {
     try {
-      // console.log(result[index][idx], team);
-
       if (result[index][idx] === team) {
         const updatedResult = result.map((item, i) =>
           i === index ? item.map((innerItem, j) => (j === idx ? "" : innerItem)) : item
         );
+
         setResult(updatedResult);
-        await db.runAsync(`UPDATE tournament SET result = ${JSON.stringify(updatedResult)}`, null);
+        await db.runAsync(`UPDATE tournaments SET result = ? WHERE title = ?`, [
+          JSON.stringify(updatedResult),
+          data.title,
+        ]);
       } else {
         const updatedResult = result.map((item, i) =>
           i === index ? item.map((innerItem, j) => (j === idx ? team : innerItem)) : item
         );
 
         setResult(updatedResult);
-        await db.runAsync(`UPDATE tournament SET result = ${JSON.stringify(updatedResult)}`, null);
+
+        await db.runAsync(`UPDATE tournaments SET result = ? WHERE title = ?`, [
+          JSON.stringify(updatedResult),
+          data.title,
+        ]);
       }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleEnd = async () => {
+    try {
+      const response = await db.runAsync("UPDATE tournaments SET finished = true WHERE id = ?", [
+        data.id,
+      ]);
+      console.log(response);
+      router.push("/home");
     } catch (err) {
       console.log(err);
     }
@@ -100,6 +120,7 @@ const Index = () => {
                     <View className="flex rounded-full flex-row w-full p-4 gap-1 shadow-xl">
                       <TouchableOpacity
                         activeOpacity={0.5}
+                        disabled={isDisabled}
                         className={`w-1/2 h-14 justify-center py-2 flex items-center bg-white rounded-l-3xl ${
                           result[index]?.[idx]
                             ? result[index][idx] === val["team1"]
@@ -121,6 +142,7 @@ const Index = () => {
                       </TouchableOpacity>
                       <TouchableOpacity
                         activeOpacity={0.5}
+                        disabled={isDisabled}
                         className={`w-1/2 h-14 justify-center py-2 flex items-center bg-white rounded-r-3xl ${
                           result[index]?.[idx]
                             ? result[index][idx] === val["team2"]
@@ -147,13 +169,16 @@ const Index = () => {
           </View>
         )}
       />
-      <TouchableOpacity
-        style={{ width: wp(86), height: hp(7) }}
-        className=" bg-green-600 rounded-xl flex justify-center items-center"
-        activeOpacity={0.7}
-      >
-        <Text className="text-xl font-bold text-[#e3d8fe]">End Tournament</Text>
-      </TouchableOpacity>
+      {!isDisabled && (
+        <TouchableOpacity
+          style={{ width: wp(86), height: hp(7) }}
+          className=" bg-green-600 rounded-xl flex justify-center items-center"
+          activeOpacity={0.7}
+          onPress={() => handleEnd()}
+        >
+          <Text className="text-xl font-bold text-[#e3d8fe]">End Tournament</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
