@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/splashscreen.png",
+        "foregroundImage": "./assets/images/logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.mogesh.smashscore"
@@ -28,6 +28,7 @@
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
+    "entryPoint": "./app/index.jsx",
     "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true
